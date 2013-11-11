@@ -89,9 +89,6 @@ public class AccountDbTest extends AndroidTestCase {
     	assertEquals("내카드", info.title);
     	assertEquals("creditcard", info.category);
     	assertEquals(20990101, info.close_date);
-    }
-    
-    public void testGetAllRecord(){
     	ArrayList<AccountInfo> array = mDb.getAllRecord();
     	assertEquals(4, array.size());
     }

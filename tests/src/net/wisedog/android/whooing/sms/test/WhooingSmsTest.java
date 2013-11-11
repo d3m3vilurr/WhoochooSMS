@@ -33,6 +33,7 @@ public class WhooingSmsTest extends ActivityInstrumentationTestCase2<WhooingSms>
 	private ListView mListView;
 	private TextView mTextBoard;
 
+	@SuppressWarnings("deprecation")
 	public WhooingSmsTest(){
         super("net.wisedog.android.whooing.sms.activity.WhooingSms", WhooingSms.class);
     }
@@ -58,7 +59,7 @@ public class WhooingSmsTest extends ActivityInstrumentationTestCase2<WhooingSms>
     }
     
     public void testBoardText(){
-    	int itemCount = mListView.getAdapter().getCount();
+    	int itemCount = mListView.getCount();
     	String msg = mTextBoard.getText().toString();
     	String msgNoData = mActivity.getString(
 				net.wisedog.android.whooing.sms.R.string.whoochoo_sms_board_no_data);
