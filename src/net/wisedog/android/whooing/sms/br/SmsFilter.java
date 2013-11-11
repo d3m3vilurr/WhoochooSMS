@@ -25,8 +25,12 @@ import android.os.Bundle;
 public class SmsFilter {
     static public final String KEY_ITEM = "item";
     static public final String KEY_CARDNAME = "cardname";
+    static public final String KEY_INOUT = "inout";
+    static public final int TYPE_INOUT_INCOMING = 1;
+    static public final int TYPE_INOUT_OUTGOING = 2;
     static public final String KEY_DATE = "date";
     static public final String KEY_MONEY = "money";
+    static public final String KEY_CARDNUMBER = "cardnumber";
     static public final String KEY_CHECKCARD = "checkcard";
 
     /**
@@ -145,6 +149,16 @@ public class SmsFilter {
         	}
         	break;
 	    
+        case SmsFilterData.CODE_IBK:
+        	b = new Bundle();
+            b.putInt(KEY_DATE, WhooingSmsUtil.convertWhooingDate(tokens[0]));
+            b.putString(KEY_ITEM, tokens[6]);
+            b.putInt(KEY_MONEY, convertToInt(tokens[3]));
+            b.putInt(KEY_INOUT, tokens[2].equals("출금") ? TYPE_INOUT_OUTGOING : TYPE_INOUT_INCOMING);
+            b.putString(KEY_CARDNUMBER, tokens[7]);
+            b.putBoolean(KEY_CHECKCARD, true);
+        	break;
+
 	    default:
 	    	break;	        	
         }

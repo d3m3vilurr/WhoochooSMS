@@ -164,4 +164,28 @@ public class SmsFilterTest extends TestCase {
         assertEquals(true, b.getBoolean(SmsFilter.KEY_CHECKCARD, false));
     }
     
+    public void testFilterMsgIBKOutgoing(){
+    	Bundle b = mFilter.filterMessage("11/06 18:06\n출금 530,463원\n잔액 2,256,323원\nGOOGLE\n123***12312300\n기업", SmsFilterData.CODE_IBK);
+    	assertNotNull(b);
+
+    	assertEquals(20131106, b.getInt(SmsFilter.KEY_DATE, -1));
+        assertEquals("GOOGLE", b.getString(SmsFilter.KEY_ITEM));
+        assertEquals(530463, b.getInt(SmsFilter.KEY_MONEY));
+        assertEquals(SmsFilterData.CODE_IBK, b.getInt(SmsFilter.KEY_CARDNAME, -1));
+        assertEquals(true, b.getBoolean(SmsFilter.KEY_CHECKCARD, false));
+        assertEquals(SmsFilter.TYPE_INOUT_OUTGOING, b.getInt(SmsFilter.KEY_INOUT, -1));
+        assertEquals("123***12312300", b.getString(SmsFilter.KEY_CARDNUMBER));
+    }
+    public void testFilterMsgIBKIncoming(){
+    	Bundle b = mFilter.filterMessage("10/15 09:57\n입금 3,114원\n잔액 5,016,561원\n체크입금\n123***12312300\n기업", SmsFilterData.CODE_IBK);
+    	assertNotNull(b);
+
+    	assertEquals(20131015, b.getInt(SmsFilter.KEY_DATE, -1));
+        assertEquals("체크입금", b.getString(SmsFilter.KEY_ITEM));
+        assertEquals(3114, b.getInt(SmsFilter.KEY_MONEY));
+        assertEquals(SmsFilterData.CODE_IBK, b.getInt(SmsFilter.KEY_CARDNAME, -1));
+        assertEquals(true, b.getBoolean(SmsFilter.KEY_CHECKCARD, false));
+        assertEquals(SmsFilter.TYPE_INOUT_INCOMING, b.getInt(SmsFilter.KEY_INOUT, -1));
+        assertEquals("123***12312300", b.getString(SmsFilter.KEY_CARDNUMBER));
+    }
 }
